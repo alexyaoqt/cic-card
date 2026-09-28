@@ -1,0 +1,10 @@
+
+body{
+    padding-top:20px;
+    padding-left:10px;
+    padding-right:10px;
+    background-color:whitesmoke;
+}
+.ctrl{text-align:center;}
+.bind-header{height:232px;}
+.bind-header img{width:100%;}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>请输入信息</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .choice-group {
+            margin-bottom: 20px;
+            text-align: left;
+            padding-left: 20px;
+        }
+        .choice-label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+        label {
+            margin-right: 18px;
+            cursor: pointer;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        #teacherSelect {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>欢迎</h2>
+
+        <div class="choice-group">
+            <span class="choice-label">性别：</span>
+            <label><input type="radio" name="gender" value="男" checked> 男</label>
+            <label><input type="radio" name="gender" value="女"> 女</label>
+        </div>
+
+        <div class="choice-group">
+            <span class="choice-label">班主任：</span>
+            <select id="teacherSelect">
+                <option value="姜雪媛">姜雪媛</option>
+                <option value="尹桂艳">尹桂艳</option>
+            </select>
+        </div>
+
+        <button onclick="startJourney()">生成卡片</button>
+    </div>
+
+    <script>
+        function startJourney() {
+            var gender = document.querySelector('input[name="gender"]:checked').value;
+            var teacher = document.getElementById('teacherSelect').value;
+
+            sessionStorage.setItem('mySavedGender', gender);
+            sessionStorage.setItem('mySavedTeacher', teacher);
+            sessionStorage.setItem('mySavedGrade', '12年级');
+
+            // XX 为 01-20 的随机两位整数。
+            var randomNumber = Math.floor(Math.random() * 20) + 1;
+            var randomSuffix = String(randomNumber).padStart(2, '0');
+            sessionStorage.setItem('mySavedStudentCode', '[JQ2103' + randomSuffix + ']');
+
+            window.location.href = 'card.html';
+        }
+    </script>
+</body>
+</html>
