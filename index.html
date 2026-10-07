@@ -69,10 +69,17 @@
         </div>
 
         <div class="choice-group">
+            <span class="choice-label">年级：</span>
+            <label><input type="radio" name="grade" value="11年级"> 11年级</label>
+            <label><input type="radio" name="grade" value="12年级" checked> 12年级</label>
+        </div>
+
+        <div class="choice-group">
             <span class="choice-label">班主任：</span>
             <select id="teacherSelect">
                 <option value="姜雪媛">姜雪媛</option>
                 <option value="尹桂艳">尹桂艳</option>
+                <option value="杨宇靖">杨宇靖</option>
             </select>
         </div>
 
@@ -83,15 +90,19 @@
         function startJourney() {
             var gender = document.querySelector('input[name="gender"]:checked').value;
             var teacher = document.getElementById('teacherSelect').value;
+            var grade = document.querySelector('input[name="grade"]:checked').value;
 
             sessionStorage.setItem('mySavedGender', gender);
             sessionStorage.setItem('mySavedTeacher', teacher);
-            sessionStorage.setItem('mySavedGrade', '12年级');
+            sessionStorage.setItem('mySavedGrade', grade);
 
             // XX 为 01-20 的随机两位整数。
             var randomNumber = Math.floor(Math.random() * 20) + 1;
             var randomSuffix = String(randomNumber).padStart(2, '0');
-            sessionStorage.setItem('mySavedStudentCode', '[JQ2103' + randomSuffix + ']');
+
+            // 11年级使用 JQ2201XX；12年级使用 JQ2103XX。
+            var codePrefix = grade === '11年级' ? 'JQ2201' : 'JQ2103';
+            sessionStorage.setItem('mySavedStudentCode', '[' + codePrefix + randomSuffix + ']');
 
             window.location.href = 'card.html';
         }

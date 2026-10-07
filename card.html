@@ -65,9 +65,10 @@ document.title = '门条';
 (function () {
     var gender = sessionStorage.getItem('mySavedGender') || '男';
     var teacher = sessionStorage.getItem('mySavedTeacher') || '姜雪媛';
+    var grade = sessionStorage.getItem('mySavedGrade') || '12年级';
     var studentCode = sessionStorage.getItem('mySavedStudentCode') || '[JQ210301]';
     document.getElementById('student-name').textContent = studentCode;
-    document.getElementById('student-info').textContent = gender + ',12年级';
+    document.getElementById('student-info').textContent = gender + ',' + grade;
     document.getElementById('teacher-name').textContent = teacher;
 
     var d = new Date();
