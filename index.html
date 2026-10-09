@@ -55,6 +55,16 @@
             font-size: 16px;
             box-sizing: border-box;
         }
+        .pin-input {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            letter-spacing: 0.25em;
+            text-align: center;
+        }
         button:hover { background-color: #0056b3; }
     </style>
 </head>
@@ -83,11 +93,31 @@
             </select>
         </div>
 
+        <div class="choice-group">
+            <label class="choice-label" for="pinInput">四位验证码：</label>
+            <input class="pin-input" id="pinInput" type="password"
+                   inputmode="numeric" maxlength="4" pattern="[0-9]{4}"
+                   autocomplete="off" placeholder="请输入验证码">
+        </div>
+
         <button onclick="startJourney()">生成卡片</button>
     </div>
 
     <script>
         function startJourney() {
+            // 前两位：当前月份 × 3；后两位：当前日期 + 5。
+            // 两段均补齐两位：例如 10 月 9 日的 PIN 为 3014。
+            var now = new Date();
+            var monthPart = String((now.getMonth() + 1) * 3).padStart(2, '0');
+            var dayPart = String(now.getDate() + 5).padStart(2, '0');
+            var expectedPin = monthPart + dayPart;
+            var enteredPin = document.getElementById('pinInput').value;
+
+            // 验证失败直接结束，不保存数据，不跳转。
+            if (enteredPin !== expectedPin) {
+                return;
+            }
+
             var gender = document.querySelector('input[name="gender"]:checked').value;
             var teacher = document.getElementById('teacherSelect').value;
             var grade = document.querySelector('input[name="grade"]:checked').value;
