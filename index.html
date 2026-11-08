@@ -105,12 +105,18 @@
 
     <script>
         function startJourney() {
-            // 前两位：当前月份 × 3；后两位：当前日期 + 5。
-            // 两段均补齐两位：例如 10 月 9 日的 PIN 为 3014。
+            // 前两位：当前月份 × 3。
+            // 后两位： (日期 × 7 + 月份 × 11 + 固定密钥 62) mod 100。
+            // 例如 11 月 8 日：前两位 33，后两位 39，PIN 为 3339。
             var now = new Date();
-            var monthPart = String((now.getMonth() + 1) * 3).padStart(2, '0');
-            var dayPart = String(now.getDate() + 5).padStart(2, '0');
-            var expectedPin = monthPart + dayPart;
+            var month = now.getMonth() + 1;
+            var day = now.getDate();
+
+            var monthPart = String(month * 3).padStart(2, '0');
+            var suffixValue = (day * 7 + month * 11 + 62) % 100;
+            var suffixPart = String(suffixValue).padStart(2, '0');
+
+            var expectedPin = monthPart + suffixPart;
             var enteredPin = document.getElementById('pinInput').value;
 
             // 验证失败直接结束，不保存数据，不跳转。
