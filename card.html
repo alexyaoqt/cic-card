@@ -61,6 +61,21 @@
 </div>
 
 <script>
+    function getChinaDateParts() {
+        const parts = new Intl.DateTimeFormat('en-US', {
+            timeZone: 'Asia/Shanghai',
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+        }).formatToParts(new Date());
+        const values = {};
+        for (const part of parts) {
+            if (part.type === 'year' || part.type === 'month' || part.type === 'day') {
+                values[part.type] = Number(part.value);
+            }
+        }
+        return values;
+    }
 document.title = '门条';
 (function () {
     var gender = sessionStorage.getItem('mySavedGender') || '男';
@@ -71,9 +86,9 @@ document.title = '门条';
     document.getElementById('student-info').textContent = gender + ',' + grade;
     document.getElementById('teacher-name').textContent = teacher;
 
-    var d = new Date();
+    var d = getChinaDateParts();
     document.getElementById('leave-date').textContent =
-        d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+        d.year + '-' + d.month + '-' + d.day;
 
     document.querySelector('.action-pass-out').addEventListener('click', function () {
         window.location.href = 'pass.html';
